@@ -122,3 +122,5 @@ for i in range(len(goodreads_list)):
     
     with open(image_name, 'wb') as file:
         file.write(response.content)
+        
+goodreads_list.to_csv("goodreads_books_with_many_ratings.csv", index=False)
