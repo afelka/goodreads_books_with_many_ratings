@@ -44,3 +44,14 @@ gg <- ggplot(goodreads_books_with_many_ratings_top_250, aes(x = avg_rating, y = 
 
 # Save the plot as an image file
 ggsave( "goodreads_plot_with_images.png",plot = gg, bg="white")
+
+#find top 20 authors and average number of ratings their books got
+authors_and_books_top20 <- goodreads_books_with_many_ratings %>% group_by(author_name) %>% 
+                           summarise(no_of_books = n(),
+                                     averaga_rating_count = round(mean(no_of_ratings),0), 
+                           books = paste(book_names, collapse = ", ")) %>% arrange(desc(no_of_books)) %>%
+                           head(20)
+
+#show in a table
+DT::datatable(authors_and_books_top20, options = list(pageLength = 20))
+
