@@ -26,8 +26,8 @@ gg <- ggplot(goodreads_books_with_many_ratings_top_250, aes(x = avg_rating, y = 
             color = "red", size = 2.5 , vjust = 1.5) +
   geom_text_repel(data = lowest_avg_rating_with_two_an_half_million_votes, aes(x = avg_rating, y = no_of_ratings, 
                                         label = paste0(book_names, "\nhas the lowest avg.(",avg_rating ,
-                                                       ") rating across books \nrwith min 2.5M ratings\n")),
-            color = "blue", size = 2.5 , vjust = -0.5, hjust = 0.2) +
+                                                       ") rating across \nbooks with min 2.5M ratings\n")),
+            color = "blue", size = 2.5 , vjust = -0.2, hjust = 0.05) +
   geom_text_repel(data = highest_avg_rating, aes(x = avg_rating, y = no_of_ratings, 
                                           label = paste0(substr(book_names,1,24), "\nhas the highest avg.(",avg_rating ,
                                                       ")\nrating across most rated books \n")),
