@@ -107,6 +107,21 @@ for my_url in urls:
 
     # Concatenate the temporary DataFrame with the main DataFrame
     goodreads_list = pd.concat([goodreads_list, temp_list], ignore_index=True)
+
+
+for i in range(len(goodreads_list)):
+    book_url = goodreads_list.iloc[i]['book_url'] 
+    driver.get(book_url)
+
+    web_elements6 = driver.find_elements(By.XPATH, '//div[@class="FeaturedDetails"]//p[@data-testid="pagesFormat"]')
+    if web_elements6:
+        page_text = web_elements6[0].text  # e.g., "352 pages"
+        page_count = int(page_text.split()[0])
+    else:
+        page_count = None    
+
+    goodreads_list.loc[i, 'no_of_pages'] = page_count
+    
     
 #download book covers 
 for i in range(len(goodreads_list)):
@@ -121,3 +136,5 @@ for i in range(len(goodreads_list)):
         file.write(response.content)
         
 goodreads_list.to_csv("goodreads_books_with_many_ratings.csv", index=False)
+
+driver.quit()
