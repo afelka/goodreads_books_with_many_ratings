@@ -52,9 +52,6 @@ goodreads_list = pd.DataFrame(columns=['book_names', 'book_urls',
 def extract_numeric(text):
     return re.sub(r'[^0-9.]', '', text) if text else None
 
-# Set up a Selenium WebDriver (make sure to install the appropriate WebDriver for your browser)
-driver = webdriver.Chrome()
-
 # Iterate through each URL in the list
 for my_url in urls:
     # Navigate to the URL
