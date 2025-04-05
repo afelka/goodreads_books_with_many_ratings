@@ -1,3 +1,5 @@
+data <- read.csv("goodreads_books_with_many_ratings.csv")
+
 server <- function(input, output, session) {
   
   # Reactive subset based on slider input
