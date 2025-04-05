@@ -11,7 +11,7 @@ data <- read.csv("goodreads_books_with_many_ratings.csv")
 #design shiny app: 
 shinyUI(fluidPage(
   
-  titlePanel("Books with more than 500 Thousands Goodreads Reviews"),
+  titlePanel("Books with over 500.000 Goodreads Reviews"),
   
   # create slider inputs
   wellPanel(
