@@ -84,11 +84,11 @@ server <- function(input, output, session) {
     tagList(
       br(),
       br(),
-      img(src = cover_file, height = "10%", width = "10%", align = "center"),
+      img(src = cover_file, height = "100px", width = "auto", align = "center"),
       br(),
       br(),
       strong("Book Name: "), book_name, br(),
-      strong("Book Url: "), a(href = book_url, book_url), br(),
+      strong("Book Url: "), a(href = book_url, target = "_blank", book_url), br(),
       strong("Author: "), author_name, br(),
       strong("Number of Pages: "), no_of_pages, br(),
       strong("Average Rating: "), avg_rating, br()
