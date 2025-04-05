@@ -1,3 +1,10 @@
+#load packages
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(DT)
+library(plotly)
+
 data <- read.csv("goodreads_books_with_many_ratings.csv")
 
 server <- function(input, output, session) {
