@@ -11,7 +11,7 @@ data <- read.csv("goodreads_books_with_many_ratings.csv")
 #design shiny app: 
 shinyUI(fluidPage(
   
-  titlePanel("Books with over 500.000 Goodreads Reviews"),
+  titlePanel("Books with over 200.000 Goodreads Reviews"),
   
   # create slider inputs
   wellPanel(
@@ -26,7 +26,14 @@ shinyUI(fluidPage(
                 min = 1,
                 max = 5,
                 value = c(1, 5),
-                step = 0.2)
+                step = 0.2),
+    
+    sliderInput("no_rating_selected", "Select Number of Ratings",
+                min = 200000,
+                max = 11000000,
+                value = c(floor(min(data$no_of_ratings, na.rm = TRUE) / 100000) * 100000,
+                          ceiling(max(data$no_of_ratings, na.rm = TRUE) / 100000) * 100000),
+                step = 100000)
   ),
   
   #create panels 
