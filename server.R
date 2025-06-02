@@ -18,7 +18,9 @@ server <- function(input, output, session) {
         no_of_pages >= input$pages_selected[1],
         no_of_pages <= input$pages_selected[2],
         avg_rating >= input$rating_selected[1],
-        avg_rating <= input$rating_selected[2]
+        avg_rating <= input$rating_selected[2],
+        no_of_ratings >= input$no_rating_selected[1],
+        no_of_ratings <= input$no_rating_selected[2]
       )
   })
   
