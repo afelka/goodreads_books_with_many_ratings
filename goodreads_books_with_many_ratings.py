@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 import re
 import pandas as pd
 import requests
+import time
 
 #start chrome driver
 driver = webdriver.Chrome()
@@ -39,7 +40,17 @@ urls = ["https://www.goodreads.com/list/show/35080",
         "https://www.goodreads.com/list/show/35080.One_Million_Ratings_?page=2",
         "https://www.goodreads.com/list/show/35177",
         "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=2",
-        "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=3"
+        "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=3",
+        "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=4",
+        "https://www.goodreads.com/list/show/36647",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=2",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=3",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=4",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=5",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=6",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=7",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=8",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=9"
        ]
 
 # Create an empty DataFrame
@@ -105,20 +116,29 @@ for my_url in urls:
         'img_src': img_src
     })
 
+    print(f"{my_url} finished")
+    time.sleep(2)
+
     # Concatenate the temporary DataFrame with the main DataFrame
     goodreads_list = pd.concat([goodreads_list, temp_list], ignore_index=True)
 
 
 for i in range(len(goodreads_list)):
-    book_url = goodreads_list.iloc[i]['book_url'] 
+    book_url = goodreads_list.iloc[i]['book_urls'] 
     driver.get(book_url)
 
     web_elements6 = driver.find_elements(By.XPATH, '//div[@class="FeaturedDetails"]//p[@data-testid="pagesFormat"]')
     if web_elements6:
         page_text = web_elements6[0].text  # e.g., "352 pages"
-        page_count = int(page_text.split()[0])
+        try:
+            page_count = int(re.search(r'\d+', page_text).group())
+        except (AttributeError, ValueError):
+            page_count = None
     else:
-        page_count = None    
+        page_count = None
+
+    print(f"{book_url} finished")
+    time.sleep(1)    
 
     goodreads_list.loc[i, 'no_of_pages'] = page_count
     
@@ -134,6 +154,9 @@ for i in range(len(goodreads_list)):
     
     with open(image_name, 'wb') as file:
         file.write(response.content)
+
+    print(f"{image_name} finished")
+    time.sleep(1) 
         
 goodreads_list.to_csv("goodreads_books_with_many_ratings.csv", index=False)
 
