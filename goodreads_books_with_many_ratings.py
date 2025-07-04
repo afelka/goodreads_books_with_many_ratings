@@ -56,7 +56,7 @@ urls = ["https://www.goodreads.com/list/show/35080",
 # Create an empty DataFrame
 goodreads_list = pd.DataFrame(columns=['book_names', 'book_urls',
                                        'author_name', 'avg_rating',
-                                       'no_of_ratings',
+                                       'no_of_ratings', 
                                        'img_src'])
 
 # Create a function to extract numeric values from text
@@ -136,6 +136,17 @@ for i in range(len(goodreads_list)):
             page_count = None
     else:
         page_count = None
+
+    # Try to get my rating if it exists
+    user_rating_elem = driver.find_elements(By.XPATH, '//div[contains(@class, "BookRatingStars")]/span[@aria-label]')
+    if user_rating_elem:
+        user_rating_text = user_rating_elem[0].get_attribute("aria-label")
+        match = re.search(r'Rating (\d+) out of 5', user_rating_text)
+        my_rating = int(match.group(1)) if match else None
+    else:
+        my_rating = None
+
+    goodreads_list.loc[i, 'my_rating'] = my_rating
 
     print(f"{book_url} finished")
     time.sleep(1)    
