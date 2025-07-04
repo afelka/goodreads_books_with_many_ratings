@@ -42,7 +42,14 @@ server <- function(input, output, session) {
         "Erdem's Rating" = my_rating_display
       )
     
-    datatable(data, options = list(dom = 'tpi'), filter = list(position = "bottom")) %>%
+    datatable(data,  options = list(
+        dom = 'tpi',
+        columnDefs = list(
+          list(className = 'dt-center', targets = "_all")
+        )
+    ), 
+    filter = list(position = "bottom")
+    )  %>%
       formatCurrency(columns = c("Number of Ratings", "Number of Pages"),
                      currency = "",
                      interval = 3,
