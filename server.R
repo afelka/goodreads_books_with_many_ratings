@@ -20,20 +20,26 @@ server <- function(input, output, session) {
         avg_rating >= input$rating_selected[1],
         avg_rating <= input$rating_selected[2],
         no_of_ratings >= input$no_rating_selected[1],
-        no_of_ratings <= input$no_rating_selected[2]
+        no_of_ratings <= input$no_rating_selected[2],
+        my_rating >= input$my_rating_selected[1],
+        my_rating <= input$my_rating_selected[2]
       )
   })
   
   # create table based on filtered table
   output$table0 <- DT::renderDataTable({
     data <- filtered_books() %>%
-      select(book_names, author_name, avg_rating, no_of_ratings, no_of_pages) %>%
+      mutate(
+        my_rating_display = ifelse(my_rating == 0, "Not Read", as.character(my_rating))
+      ) %>%
+      select(book_names, author_name, avg_rating, no_of_ratings, no_of_pages, my_rating_display) %>%
       rename(
         "Book Name" = book_names,
         "Author" = author_name,
         "Avg Rating" = avg_rating,
         "Number of Ratings" = no_of_ratings,
-        "Number of Pages" = no_of_pages
+        "Number of Pages" = no_of_pages,
+        "Erdem's Rating" = my_rating_display
       )
     
     datatable(data, options = list(dom = 'tpi'), filter = list(position = "bottom")) %>%
@@ -45,10 +51,12 @@ server <- function(input, output, session) {
   })
   
   # text on I'm Feeling Lucky tab
-  output$lucky_text <- renderText({
-    paste0(
-      "<b>In this tab, a random book is selected from the filtered list based on your chosen number of pages and average rating. ",
-      "Click the 'Re-select a Random Book' button to get a new recommendation!</b>"
+  output$lucky_text <- renderUI({
+    HTML(
+      paste0(
+        "<b>In this tab, a random book is selected from the filtered list based on your chosen number of pages, average rating, number of ratings and Erdem's rating.</b><br><br>",
+        "<b>Click the 'Re-select a Random Book' button to get a new recommendation!</b>"
+      )
     )
   })
   
@@ -72,28 +80,31 @@ server <- function(input, output, session) {
   
   # Render the random book cover details
   output$random_book_cover_details <- renderUI({
-    random_book <- random_book_data()  # Get the current random book
+    random_book <- random_book_data()      # Get the current random book
     
-    # Get details about the random book
-    cover_file <- random_book$image_name  # Image file name (e.g., 'book1_cover.png')
-    book_name <- random_book$book_names   # Book name
-    author_name <- random_book$author_name # Author name
-    no_of_pages <- random_book$no_of_pages # Number of pages
-    book_url <- random_book$book_urls      # URL for the book
-    avg_rating <- random_book$avg_rating      # URL for the book
+    # Extract details
+    cover_file   <- random_book$image_name
+    book_name    <- random_book$book_names
+    author_name  <- random_book$author_name
+    no_of_pages  <- random_book$no_of_pages
+    book_url     <- random_book$book_urls
+    avg_rating   <- random_book$avg_rating
+    my_rating    <- random_book$my_rating 
     
-    # Create the UI to display image, book details, and the URL
+    # Convert my_rating: 0 → "Not Read", 1–5 → as‑is
+    my_rating_display <- ifelse(my_rating == 0, "Not Read", as.character(my_rating))
+    
+    # Build the UI fragment
     tagList(
-      br(),
-      br(),
+      br(), br(),
       img(src = cover_file, height = "100px", width = "auto", align = "center"),
-      br(),
-      br(),
-      strong("Book Name: "), book_name, br(),
-      strong("Book Url: "), a(href = book_url, target = "_blank", book_url), br(),
-      strong("Author: "), author_name, br(),
-      strong("Number of Pages: "), no_of_pages, br(),
-      strong("Average Rating: "), avg_rating, br()
+      br(), br(),
+      strong("Book Name: "),  book_name,          br(),
+      strong("Book Url: "),   a(href = book_url, target = "_blank", book_url), br(),
+      strong("Author: "),     author_name,        br(),
+      strong("Number of Pages: "), no_of_pages,   br(),
+      strong("Average Rating: "),   avg_rating,   br(),
+      strong("Erdem's Rating: "),        my_rating_display, br() 
     )
   })
   

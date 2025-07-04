@@ -30,10 +30,16 @@ shinyUI(fluidPage(
     
     sliderInput("no_rating_selected", "Select Number of Ratings",
                 min = 200000,
-                max = 11000000,
+                max = ceiling(max(data$no_of_ratings, na.rm = TRUE) / 100000) * 100000,
                 value = c(floor(min(data$no_of_ratings, na.rm = TRUE) / 100000) * 100000,
                           ceiling(max(data$no_of_ratings, na.rm = TRUE) / 100000) * 100000),
-                step = 100000)
+                step = 100000),
+    
+    sliderInput("my_rating_selected", "Select Erdem's Rating (0 = Not read, 1–5 = Rated)",
+                min = 0,
+                max = 5,
+                value = c(0, 5),
+                step = 1)
   ),
   
   #create panels 
