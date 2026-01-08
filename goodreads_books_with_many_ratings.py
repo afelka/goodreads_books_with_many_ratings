@@ -35,9 +35,10 @@ user_password.send_keys(password_input)
 sign_in_submit = driver.find_element("css selector", "#signInSubmit")
 sign_in_submit.click()
 
-# List of URLs (books with at least 500K Ratings)
+# List of URLs (books with at least 200K Ratings)
 urls = ["https://www.goodreads.com/list/show/35080", 
         "https://www.goodreads.com/list/show/35080.One_Million_Ratings_?page=2",
+        "https://www.goodreads.com/list/show/35080.One_Million_Ratings_?page=3",
         "https://www.goodreads.com/list/show/35177",
         "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=2",
         "https://www.goodreads.com/list/show/35177.Half_a_million_ratings_to_a_million_ratings?page=3",
@@ -50,7 +51,8 @@ urls = ["https://www.goodreads.com/list/show/35080",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=6",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=7",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=8",
-        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=9"
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=9",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=10"
        ]
 
 # Create an empty DataFrame
