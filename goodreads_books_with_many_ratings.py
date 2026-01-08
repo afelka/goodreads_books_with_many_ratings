@@ -149,11 +149,10 @@ for i in range(len(goodreads_list)):
         my_rating = None
 
     goodreads_list.loc[i, 'my_rating'] = my_rating
+    goodreads_list.loc[i, 'no_of_pages'] = page_count
 
     print(f"{book_url} finished")
-    time.sleep(1)    
-
-    goodreads_list.loc[i, 'no_of_pages'] = page_count
+    time.sleep(1)        
     
     
 #download book covers 
