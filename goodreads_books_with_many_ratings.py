@@ -52,7 +52,8 @@ urls = ["https://www.goodreads.com/list/show/35080",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=7",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=8",
         "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=9",
-        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=10"
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=10",
+        "https://www.goodreads.com/list/show/36647.Books_with_ratings_from_200_000_to_500_000?page=11",
        ]
 
 # Create an empty DataFrame
