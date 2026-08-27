@@ -141,9 +141,9 @@ for i in range(len(goodreads_list)):
         page_count = None
 
     # Try to get my rating if it exists
-    user_rating_elem = driver.find_elements(By.XPATH, '//div[contains(@class, "BookRatingStars")]/span[@aria-label]')
+    user_rating_elem = rating_elem = driver.find_element(By.XPATH, '//div[contains(@class, "BookRatingStars")]//span[@role="group"][@aria-label]')
     if user_rating_elem:
-        user_rating_text = user_rating_elem[0].get_attribute("aria-label")
+        user_rating_text = user_rating_elem.get_attribute("aria-label")
         match = re.search(r'Rating (\d+) out of 5', user_rating_text)
         my_rating = int(match.group(1)) if match else None
     else:
